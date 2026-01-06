@@ -1,0 +1,43 @@
+telegram_test_script:
+  sequence:
+  - action: telegram_bot.send_message
+    metadata: {}
+    data:
+      config_entry_id: 01KEA1ZSWWVH9FKBMG8X5WA93D
+      message: Hola amigos
+  alias: Telegram Test Script
+  description: ''
+timbre_entrada_snapshot_telegram:
+  alias: Timbre Entrada Snapshot Telegram
+  description: Toma una foto del timbre y la envia via Telegram
+  sequence:
+  - variables:
+      snapshot_filename: doorbell_{{ now().strftime('%Y%m%d_%H%M%S') }}.jpg
+  - parallel:
+    - sequence:
+      - delay:
+          seconds: 2
+      - action: downloader.download_file
+        data:
+          url: http://127.0.0.1:1984/api/frame.jpeg?src=cam5_main&{{as_timestamp(now())}}
+          filename: '{{ snapshot_filename }}'
+          subdir: camera_snapshot
+    - sequence:
+      - action: camera.snapshot
+        target:
+          entity_id: camera.timbre_entrada
+        data:
+          filename: /config/www/camera_snapshot/doorbell_snapshot_1.jpg
+  - action: telegram_bot.send_photo
+    data:
+      file: /config/www/camera_snapshot/doorbell_snapshot_1.jpg
+      caption: Timbre Entrada
+  - action: telegram_bot.send_photo
+    data:
+      file: /config/www/camera_snapshot/{{ snapshot_filename }}
+      caption: Frente de Casa
+  - action: telegram_bot.send_message
+    data:
+      config_entry_id: 01KEA1ZSWWVH9FKBMG8X5WA93D
+      message: Alguien está en la puerta de entrada
+  mode: parallel

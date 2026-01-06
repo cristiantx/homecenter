@@ -1,6 +1,6 @@
 {
     "0x0ceff6fffee133c5": {
-        "state": "ON",
+        "state": "OFF",
         "power_on_behavior": "off",
         "update": {
             "state": "idle",

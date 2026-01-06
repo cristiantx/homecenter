@@ -97,3 +97,33 @@
       entity_id: light.device595cdf
     data: {}
   mode: single
+- id: '1736150400000'
+  alias: Timbre Entrada Telegram Snapshot
+  description: Envia una foto del timbre via Telegram cuando alguien toca el timbre
+  triggers:
+  - trigger: state
+    entity_id: event.timbre_entrada_doorbell_message
+  conditions: []
+  actions:
+  - action: script.turn_on
+    target:
+      entity_id: script.timbre_entrada_snapshot_telegram
+  mode: single
+- id: '1767728203826'
+  alias: Lavadora Secando
+  description: ''
+  triggers:
+  - trigger: state
+    entity_id:
+    - sensor.lavadora_current_status
+    to:
+    - drying
+  conditions: []
+  actions:
+  - action: telegram_bot.send_message
+    metadata: {}
+    data:
+      config_entry_id: 01KEA1ZSWWVH9FKBMG8X5WA93D
+      message: "\U0001F455 La lavadora esta secando"
+      title: 'Lavadora:'
+  mode: single

@@ -68,3 +68,4 @@ custom_components/**/.storage/
 ####################################
 media/
 otbr-data/
+homeassistant/config/www/
