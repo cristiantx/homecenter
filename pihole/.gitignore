@@ -1,31 +1,34 @@
 ####################################
 # Pi-hole core runtime data
 ####################################
-etc-pihole/gravity.db
-etc-pihole/gravity_old.db
-etc-pihole/pihole-FTL.db
-etc-pihole/pihole-FTL.db-shm
-etc-pihole/pihole-FTL.db-wal
+gravity.db
+gravity_old.db
+pihole-FTL.db
+pihole-FTL.db-shm
+pihole-FTL.db-wal
+listsCache/
+gravity_backups/
+config_backups/
 
 ####################################
 # DHCP leases & runtime state
 ####################################
-etc-pihole/dhcp.leases
-etc-pihole/macvendor.db
+dhcp.leases
+macvendor.db
 
 ####################################
 # Logs
 ####################################
-etc-pihole/pihole.log
-etc-pihole/pihole.log.*
-etc-pihole/FTL.log
-etc-pihole/FTL.log.*
+pihole.log
+pihole.log.*
+FTL.log
+FTL.log.*
 
 ####################################
 # Temp & cache
 ####################################
-etc-pihole/*.tmp
-etc-pihole/*.temp
+*.tmp
+*.temp
 
 ####################################
 # Web admin / lighttpd runtime
@@ -36,7 +39,7 @@ var-log/
 ####################################
 # Secrets
 ####################################
-etc-pihole/setupVars.conf
+setupVars.conf
 .env
 *.env
 
