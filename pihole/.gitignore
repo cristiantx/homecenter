@@ -1,0 +1,50 @@
+####################################
+# Pi-hole core runtime data
+####################################
+etc-pihole/gravity.db
+etc-pihole/gravity_old.db
+etc-pihole/pihole-FTL.db
+etc-pihole/pihole-FTL.db-shm
+etc-pihole/pihole-FTL.db-wal
+
+####################################
+# DHCP leases & runtime state
+####################################
+etc-pihole/dhcp.leases
+etc-pihole/macvendor.db
+
+####################################
+# Logs
+####################################
+etc-pihole/pihole.log
+etc-pihole/pihole.log.*
+etc-pihole/FTL.log
+etc-pihole/FTL.log.*
+
+####################################
+# Temp & cache
+####################################
+etc-pihole/*.tmp
+etc-pihole/*.temp
+
+####################################
+# Web admin / lighttpd runtime
+####################################
+etc-lighttpd/
+var-log/
+
+####################################
+# Secrets
+####################################
+etc-pihole/setupVars.conf
+.env
+*.env
+
+####################################
+# OS / editor junk
+####################################
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.swp
