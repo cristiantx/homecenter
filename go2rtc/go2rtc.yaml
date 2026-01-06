@@ -13,7 +13,7 @@ streams:
     - rtsps://echo:JzFfrQMFx8YDfUwSn0YolpaBYS67d9Mv@wework-16-us.stream.iot-11.com:443/v1/ebed32f4d3907f4cb4dazg/d5e7jvc6589m0j6q1np0RvD7WX5DJFku?signInfo=Hy9QB3k646aa-VAXDSEXH6UTTeU2RfmTujcxpWjlYRpCc-bHTEIAwsFWSoeNGK2QMIrTPorrwsfvBXZWF5UzWgTqMs8Yxqwov5jB7OsuHkEu18SWTGKPWzKtVCTUZRA0cuWlNUtrbTKZyIQN045UCB-n6idqi6SMz2qKtxX0j2Q
     - ffmpeg:camera.alimentador#audio=opus#query=log_level=debug
   camera.timbre_entrada:
-    - rtsps://echo:auc5YVoT82rrtVBN3xdvN8bO7PQJyuSU@wework-20-us.stream.iot-11.com:443/v1/eb57828154ba09bcd8lsia/d5e7ke0vn82sgvkddmtgk8Lju9cjNjIb?signInfo=AN_gJMboqbmPwXUxFCdYHVqmXI4sdISAbugQvSMswdHE20vKtuRTLIHOvzUuNfAxQ_NjmMoUvwAgzvW9hvQyn-10IFqNA9fGkwqGP6zMS0JDIpQY5eWQ8PJmiu-YvFnJnIk94ttkzFSNwH80bx4EnvrKp_W8JIa6DeFTnPTPJi4
+    - rtsps://echo:1cMBFVDUJ56MTvVLLjCi2aFhpmoEOJTJ@wework-20-us.stream.iot-11.com:443/v1/eb57828154ba09bcd8lsia/d5ejod0vn82sgvkgera0zJpVukBxH3FP?signInfo=eZhxvTF4abez860zfcNh85saU7d49ZZ869Ev2Hi4JboQ3zRtHRn-FJh1Yn6KGMb3MpdKF364rEqb45B7UaqHgyXDmM-ZIgP6qkugH1eq95FKFCXH_UeE682UVDQWA9-GtJR_6ZEJ4M48AXVacy3jbrl1cVFVsOYw9ENHwlQH2Cc
     - ffmpeg:camera.timbre_entrada#audio=opus#query=log_level=debug
 api:
   listen: ":1984"
