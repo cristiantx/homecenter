@@ -1,0 +1,99 @@
+- id: '1767666169903'
+  alias: Pasillo Tecla Conmutada
+  description: ''
+  use_blueprint:
+    path: itayavra/Bidirection switch and light sync.yaml
+    input:
+      controller: light.wifi_smart_switch
+      target: light.tecla_pasillo_switch_1
+- id: '1767666342303'
+  alias: Tecla Conmutada Luz Escalera
+  description: ''
+  use_blueprint:
+    path: itayavra/Bidirection switch and light sync.yaml
+    input:
+      controller: light.tecla_pasillo_switch_2
+      target: light.tecla_escalera_planta_baja
+- id: '1767666439218'
+  alias: Tecla Conmutada Luz Ambiente Entrada
+  description: ''
+  use_blueprint:
+    path: itayavra/Bidirection switch and light sync.yaml
+    input:
+      controller: light.tecla_entrada_living_switch_3
+      target: light.tecla_ambiente_switch_1
+- id: '1767666544370'
+  alias: Tecla Conmutada Luz Cocina
+  description: ''
+  use_blueprint:
+    path: itayavra/Bidirection switch and light sync.yaml
+    input:
+      target: light.tecla_entrada_cocina_switch_2
+      controller: light.tecla_cocina_switch_1
+- id: '1767706322921'
+  alias: Luces Seguridad Anochecer
+  description: ''
+  triggers:
+  - trigger: sun
+    event: sunset
+    offset: 0
+  conditions: []
+  actions:
+  - action: light.turn_on
+    metadata: {}
+    target:
+      label_id: luces_testigo
+    data: {}
+  mode: single
+- id: '1767706396798'
+  alias: Luces Seguridad Amanecer
+  description: ''
+  triggers:
+  - trigger: sun
+    event: sunrise
+    offset: 0
+  conditions: []
+  actions:
+  - action: light.turn_off
+    metadata: {}
+    target:
+      label_id: luces_testigo
+    data: {}
+  mode: single
+- id: '1767707666155'
+  alias: 'Encender Luces Navideñas '
+  description: ''
+  triggers:
+  - trigger: sun
+    event: sunset
+    offset: 0
+  conditions: []
+  actions:
+  - action: light.turn_on
+    metadata: {}
+    target:
+      entity_id: light.device595cdf
+    data: {}
+  mode: single
+- id: '1767707741600'
+  alias: Apagar Luces Navideñas
+  description: ''
+  triggers:
+  - trigger: time
+    at: '23:59:00'
+    weekday:
+    - mon
+    - tue
+    - wed
+    - thu
+    - fri
+    - sat
+    - sun
+  conditions: []
+  actions:
+  - action: light.turn_off
+    metadata: {}
+    target:
+      entity_id: light.device595cdf
+    data: {}
+  mode: single

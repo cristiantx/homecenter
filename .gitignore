@@ -1,0 +1,69 @@
+####################################
+# Home Assistant Core
+####################################
+.storage/
+.cloud/
+.cloudhook/
+.ash_history
+.last_version
+.ipynb_checkpoints/
+
+####################################
+# Logs & Runtime
+####################################
+home-assistant.log
+home-assistant.log.*
+*.log
+*.log.*
+
+####################################
+# Databases & Recorder
+####################################
+*.db
+*.db-shm
+*.db-wal
+
+####################################
+# Backups & Snapshots
+####################################
+backups/
+*.tar
+*.tar.gz
+
+####################################
+# Temporary & Cache
+####################################
+tmp/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+####################################
+# OS / Editor junk
+####################################
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.swp
+
+####################################
+# Secrets & Credentials
+####################################
+secrets.yaml
+known_devices.yaml
+tts/
+www/community/*/node_modules/
+
+####################################
+# HACS
+####################################
+# HACS installed integrations (keep manifests/configs)
+custom_components/**/.translations/
+custom_components/**/.storage/
+
+####################################
+# Optional: Ignore local media
+####################################
+media/

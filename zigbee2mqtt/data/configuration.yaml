@@ -1,0 +1,52 @@
+homeassistant:
+  enabled: true
+mqtt:
+  server: mqtt://mqtt:1883
+frontend:
+  enabled: true
+  port: 8080
+serial:
+  port: tcp://192.168.4.179:6638
+  adapter: ember
+  baudrate: 115200
+advanced:
+  network_key:
+    - 191
+    - 14
+    - 120
+    - 7
+    - 213
+    - 252
+    - 253
+    - 195
+    - 132
+    - 99
+    - 140
+    - 238
+    - 88
+    - 121
+    - 245
+    - 188
+  pan_id: 20206
+  ext_pan_id:
+    - 186
+    - 161
+    - 29
+    - 62
+    - 216
+    - 29
+    - 170
+    - 223
+  transmit_power: 20
+version: 4
+devices:
+  '0x0ceff6fffee133c5':
+    friendly_name: Luz Oficina
+  '0x0ceff6fffee1beda':
+    friendly_name: Luz Cama
+  '0x0ceff6fffee1c00b':
+    friendly_name: Luz Estudio
+  '0x0ceff6fffee10c50':
+    friendly_name: Luz Ducha
+  '0x3410f4fffede4e21':
+    friendly_name: Luz Bacha

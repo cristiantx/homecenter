@@ -1,0 +1,11 @@
+RCP_HOST=192.168.4.179
+RCP_PORT=7638
+
+ENABLE_TREL=false
+
+# Optional but recommended (match your host interface name)
+OTBR_BACKBONE_IF=wlx2016d803b6d6
+OTBR_THREAD_IF=wpan0
+
+# Logs
+OTBR_LOG_LEVEL_INT=6

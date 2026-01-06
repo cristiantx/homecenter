@@ -1,0 +1,101 @@
+version: "3.9"
+
+services:
+  pihole:
+    image: pihole/pihole:latest
+    container_name: pihole
+    hostname: pihole
+    restart: unless-stopped
+    dns:
+      - 1.1.1.1
+      - 8.8.8.8
+    ports:
+      - "53:53/tcp"
+      - "53:53/udp"
+      - "8082:80/tcp"   # Web UI
+    environment:
+      TZ: "America/Argentina/Buenos_Aires"
+      WEBPASSWORD: "q1w2e3%!q1w2e3"
+      DNS1: "1.1.1.1"
+      DNS2: "8.8.8.8"
+    volumes:
+      - ./pihole/data:/etc/pihole
+      - ./pihole/data/dnsmasq.d:/etc/dnsmasq.d
+    cap_add:
+      - NET_ADMIN
+    networks:
+      - ipv6-network # Assign the container to the IPv6-enabled network
+
+  homeassistant:
+    image: ghcr.io/home-assistant/home-assistant:stable
+    container_name: homeassistant
+    restart: unless-stopped
+    network_mode: host
+    volumes:
+      - ./homeassistant/config:/config
+      - /etc/localtime:/etc/localtime:ro
+    privileged: true
+  matter-server:
+    image: ghcr.io/home-assistant-libs/python-matter-server:stable
+    container_name: matter-server
+    restart: unless-stopped
+    network_mode: host
+  otbr:
+    container_name: otbr
+    image: bnutzer/otbr-tcp:latest
+    network_mode: host
+    restart: unless-stopped
+    privileged: true
+    cap_drop:
+      - NET_ADMIN   # Should prevent iptables/ipset updates
+      - NET_RAW     # No raw network access
+    devices:
+      - /dev/net/tun
+    volumes:
+    - ./otbr-data:/var/lib/thread
+    env_file:
+      - otbr-env.list
+  mqtt:
+    image: eclipse-mosquitto:2
+    container_name: mqtt
+    restart: unless-stopped
+    ports:
+      - "1883:1883"
+      - "9001:9001"   # optional websockets
+    volumes:
+      - ./mosquitto/config:/mosquitto/config
+      - ./mosquitto/data:/mosquitto/data
+      - ./mosquitto/log:/mosquitto/log
+    networks:
+      - iot
+  go2rtc:
+    image: alexxit/go2rtc:latest
+    container_name: go2rtc
+    restart: unless-stopped
+    network_mode: host
+    environment:
+      - TZ=America/Argentina/Buenos_Aires
+    volumes:
+      - ./go2rtc:/config
+    working_dir: /config
+  zigbee2mqtt:
+    image: koenkk/zigbee2mqtt:latest
+    container_name: zigbee2mqtt
+    restart: unless-stopped
+    depends_on:
+      - mqtt
+    ports:
+      - "8080:8080"   # Zigbee2MQTT UI
+    volumes:
+      - ./zigbee2mqtt/data:/app/data
+      - /etc/localtime:/etc/localtime:ro
+    environment:
+      - TZ=America/Argentina/Buenos_Aires
+    networks:
+      - iot
+
+networks:
+  ipv6-network:
+    enable_ipv6: true
+  iot:
+    driver: bridge

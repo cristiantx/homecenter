@@ -1,0 +1,69 @@
+blueprint:
+  name: Sync Switch or Light with Target (Bi-directional)
+  description: 'Keeps a switch or light (controller) in sync with another light or
+    switch (target), which can be a group or a single entity. Toggling either will
+    toggle the other. Prevents feedback loops using state checks.
+
+    '
+  domain: automation
+  input:
+    controller:
+      name: Controller
+      description: A switch or light that toggles the target (e.g. wall switch)
+      selector:
+        entity:
+          domain:
+          - switch
+          - light
+          reorder: false
+          multiple: false
+    target:
+      name: Target
+      description: A light, switch, or group that should stay in sync with the controller
+      selector:
+        entity:
+          domain:
+          - switch
+          - light
+          reorder: false
+          multiple: false
+  source_url: https://gist.github.com/itayavra/612bf464c80200b79602f6f3b08dd090
+trigger:
+- platform: state
+  entity_id: !input controller
+  to:
+  - 'on'
+  - 'off'
+- platform: state
+  entity_id: !input target
+  to:
+  - 'on'
+  - 'off'
+variables:
+  controller_entity: !input controller
+  target_entity: !input target
+  controller_state: '{{ states(controller_entity) }}'
+  target_state: '{{ states(target_entity) }}'
+mode: queued
+action:
+- choose:
+  - conditions:
+    - condition: template
+      value_template: '{{ trigger.entity_id == controller_entity }}'
+    - condition: template
+      value_template: '{{ controller_state != target_state }}'
+    sequence:
+    - service: "{% if controller_state == 'on' %}\n  homeassistant.turn_on\n{% else
+        %}\n  homeassistant.turn_off\n{% endif %}\n"
+      target:
+        entity_id: !input target
+  - conditions:
+    - condition: template
+      value_template: '{{ trigger.entity_id == target_entity }}'
+    - condition: template
+      value_template: '{{ target_state != controller_state }}'
+    sequence:
+    - service: "{% if target_state == 'on' %}\n  homeassistant.turn_on\n{% else %}\n
+        \ homeassistant.turn_off\n{% endif %}\n"
+      target:
+        entity_id: !input controller
