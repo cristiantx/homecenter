@@ -1,6 +1,10 @@
 go2rtc:
   url: "http://127.0.0.1:1984"
 
+homeassistant:
+  allowlist_external_dirs:
+    - "/media"
+
 # Loads default set of integrations. Do not remove.
 default_config:
 
