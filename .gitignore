@@ -67,3 +67,4 @@ custom_components/**/.storage/
 # Optional: Ignore local media
 ####################################
 media/
+otbr-data/
