@@ -15,3 +15,22 @@ frontend:
 automation: !include automations.yaml
 script: !include scripts.yaml
 scene: !include scenes.yaml
+
+rest:
+  - resource: http://localhost:61210/api/4/sensors
+    scan_interval: 60
+    sensor:
+      - name: "HA Laptop Battery"
+        value_template: >
+          {{ value_json
+             | selectattr('type', 'equalto', 'battery')
+             | map(attribute='value')
+             | first }}
+        unit_of_measurement: "%"
+
+      - name: "HA Laptop Battery Status"
+        value_template: >
+          {{ value_json
+             | selectattr('type', 'equalto', 'battery')
+             | map(attribute='status')
+             | first }}

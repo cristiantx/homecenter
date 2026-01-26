@@ -31,6 +31,7 @@ services:
     container_name: homeassistant
     restart: unless-stopped
     network_mode: host
+    user: "1000:1000"
     volumes:
       - ./homeassistant/config:/config
       - ./homeassistant/media:/media
@@ -94,6 +95,17 @@ services:
       - TZ=America/Argentina/Buenos_Aires
     networks:
       - iot
+  matter-hub:
+    image: ghcr.io/t0bst4r/home-assistant-matter-hub:latest
+    restart: unless-stopped
+    network_mode: host
+    environment: # more options can be found in the configuration section
+      - HAMH_HOME_ASSISTANT_URL=http://127.0.0.1:8123/
+      - HAMH_HOME_ASSISTANT_ACCESS_TOKEN=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJiOTUzNzdiMDI1YzQ0MWNiYjVmYzU0NjQwNzM5YjIyOSIsImlhdCI6MTc2OTE5MjEzNCwiZXhwIjoyMDg0NTUyMTM0fQ.TV41IXGF2OpPH4E1tQ2ExkgcmxldFpFHSPJcQjZCQfs
+      - HAMH_LOG_LEVEL=debug
+      - HAMH_HTTP_PORT=8482
+    volumes:
+      - $PWD/home-assistant-matter-hub:/data
 
 networks:
   ipv6-network:

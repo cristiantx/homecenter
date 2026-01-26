@@ -7,7 +7,7 @@
             "installed_version": 4110,
             "latest_version": 4110
         },
-        "linkquality": 168
+        "linkquality": 148
     },
     "0x0ceff6fffee1beda": {
         "state": "ON",
@@ -17,7 +17,7 @@
             "installed_version": 4110,
             "latest_version": 4110
         },
-        "linkquality": 116
+        "linkquality": 120
     },
     "0x0ceff6fffee1c00b": {
         "state": "OFF",
@@ -32,7 +32,7 @@
     "0x0ceff6fffee10c50": {
         "state": "OFF",
         "power_on_behavior": "off",
-        "linkquality": 80,
+        "linkquality": 108,
         "update": {
             "state": "idle",
             "installed_version": 4110,
@@ -47,6 +47,6 @@
             "installed_version": 4110,
             "latest_version": 4110
         },
-        "linkquality": 148
+        "linkquality": 132
     }
 }

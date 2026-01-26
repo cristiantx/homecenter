@@ -1,17 +1,20 @@
 streams:
-  cam1_main: rtsp://hassistant:Qwe123qwe@192.168.4.144:554/Streaming/channels/101
-  cam1_sub:  rtsp://hassistant:Qwe123qwe@192.168.4.144:554/Streaming/channels/102
-  cam2_main: rtsp://hassistant:Qwe123qwe@192.168.4.144:554/Streaming/channels/201
-  cam2_sub:  rtsp://hassistant:Qwe123qwe@192.168.4.144:554/Streaming/channels/202
-  cam3_main: rtsp://hassistant:Qwe123qwe@192.168.4.144:554/Streaming/channels/301
-  cam3_sub:  rtsp://hassistant:Qwe123qwe@192.168.4.144:554/Streaming/channels/302
-  cam4_main: rtsp://hassistant:Qwe123qwe@192.168.4.144:554/Streaming/channels/401
-  cam4_sub:  rtsp://hassistant:Qwe123qwe@192.168.4.144:554/Streaming/channels/402
-  cam5_main: rtsp://hassistant:Qwe123qwe@192.168.4.144:554/Streaming/channels/501
-  cam5_sub:  rtsp://hassistant:Qwe123qwe@192.168.4.144:554/Streaming/channels/502
+  cam1_main: rtsp://hassistant:Qwe123Qw@192.168.4.144:554/Streaming/channels/101#video
+  cam1_sub:  rtsp://hassistant:Qwe123Qw@192.168.4.144:554/Streaming/channels/102#video
+  cam2_main: rtsp://hassistant:Qwe123Qw@192.168.4.144:554/Streaming/channels/201#video
+  cam2_sub:  rtsp://hassistant:Qwe123Qw@192.168.4.144:554/Streaming/channels/202#video
+  cam3_main: rtsp://hassistant:Qwe123Qw@192.168.4.144:554/Streaming/channels/301#video
+  cam3_sub:  rtsp://hassistant:Qwe123Qw@192.168.4.144:554/Streaming/channels/302#video
+  cam4_main: rtsp://hassistant:Qwe123Qw@192.168.4.144:554/Streaming/channels/401#video
+  cam4_sub:  rtsp://hassistant:Qwe123Qw@192.168.4.144:554/Streaming/channels/402#video
+  cam5_main: rtsp://hassistant:Q1w2e3Q1w2e3_-@192.168.4.158:554/Streaming/channels/101
+  cam5_sub: rtsp://hassistant:Q1w2e3Q1w2e3_-@192.168.4.158:554/Streaming/channels/102
   camera.timbre_entrada:
-    - rtsps://echo:d7XKhb8uo00we8fPRkHp1vAAnpRk1SUb@wework-16-us.stream.iot-11.com:443/v1/eb57828154ba09bcd8lsia/d5ena4s6589m0j6v4580hQD3AwyQvjF1?signInfo=XJWYbkLyx_Yfclgatx-2h1JAtltRmdrG0dtQo_RDWtHHRyz3l17FnXl1eN8XWiKSvIauAnr5kvUty69o17yKeGQNPqadPtSM7vPDtKcPqFrFaWGzutNB45eYD4fzoIBTKPHMomg3VAg3-qd8SM03N8ITZSTP0eJIEAtzyl1Mjos
+    - rtsps://echo:CKQr2Rmv88zyNfvF47ntp9587eit550K@wework-21-us.stream.iot-11.com:443/v1/eb57828154ba09bcd8lsia/d5nofogqqidekv7rl49gMHSYLAw1LnjL?signInfo=53B9BppoNVM4XIXUyUGgq2jvgswAwtsLw9iFr7eFr3mntF1MEldbCnr_cibdH-PvsHhRC9yV4rDrj-038SajQEBlz7nX3--1r90I1HxYbIMf3d4VBIs2xZq-H_mH9k9sMlbZvZJp0gTufuMKKi6PKeAKmJ79_GSgdi03-VQGRC4
     - ffmpeg:camera.timbre_entrada#audio=opus#query=log_level=debug
+  camera.habitacion:
+    - rtsps://echo:bfFmnl3B3UzCEl6m4sL2OeJjm23yLjdU@wework-17-us.stream.iot-11.com:443/v1/eba8732d4b50a6f9aeof8v/d5fvfft333f4a07umrc0zIfKdy2wloTL?signInfo=WwDNVHtRpYXRR8WjHoFW-ysZtFt9G_dF3Zz3u98A9bY3RRVUKbAx2b-EFx0rA0-sasiGUL09oDs2RnsGnGjGen9SgcvwHLs4NXnQgnZbV_4r8wsnGVFqT-2eaLBJ-PysMSCsRuNoMSC1l29eaoTbAVTFqFwwlBORMAajM6m7Mh4
+    - ffmpeg:camera.habitacion#audio=opus#query=log_level=debug
 api:
   listen: ":1984"
 
@@ -20,3 +23,9 @@ rtsp:
 
 webrtc:
   listen: ":8555"
+
+discovery:
+  enabled: true
+  
+log:
+  level: debug

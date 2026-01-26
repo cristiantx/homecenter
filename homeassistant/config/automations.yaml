@@ -30,75 +30,8 @@
     input:
       target: light.tecla_entrada_cocina_switch_2
       controller: light.tecla_cocina_switch_1
-- id: '1767706322921'
-  alias: Luces Seguridad Anochecer
-  description: ''
-  triggers:
-  - trigger: sun
-    event: sunset
-    offset: 0
-  conditions: []
-  actions:
-  - action: light.turn_on
-    metadata: {}
-    target:
-      label_id: luces_testigo
-    data: {}
-  mode: single
-- id: '1767706396798'
-  alias: Luces Seguridad Amanecer
-  description: ''
-  triggers:
-  - trigger: sun
-    event: sunrise
-    offset: 0
-  conditions: []
-  actions:
-  - action: light.turn_off
-    metadata: {}
-    target:
-      label_id: luces_testigo
-    data: {}
-  mode: single
-- id: '1767707666155'
-  alias: 'Encender Luces Navideñas '
-  description: ''
-  triggers:
-  - trigger: sun
-    event: sunset
-    offset: 0
-  conditions: []
-  actions:
-  - action: light.turn_on
-    metadata: {}
-    target:
-      entity_id: light.device595cdf
-    data: {}
-  mode: single
-- id: '1767707741600'
-  alias: Apagar Luces Navideñas
-  description: ''
-  triggers:
-  - trigger: time
-    at: '23:59:00'
-    weekday:
-    - mon
-    - tue
-    - wed
-    - thu
-    - fri
-    - sat
-    - sun
-  conditions: []
-  actions:
-  - action: light.turn_off
-    metadata: {}
-    target:
-      entity_id: light.device595cdf
-    data: {}
-  mode: single
 - id: '1736150400000'
-  alias: Timbre Entrada Telegram Snapshot
+  alias: Timbre Entrada, Hay Alguien
   description: Envia una foto del timbre via Telegram cuando alguien toca el timbre
   triggers:
   - trigger: state
@@ -108,6 +41,44 @@
   - action: script.turn_on
     target:
       entity_id: script.timbre_entrada_snapshot_telegram
+  - action: scene.create
+    data:
+      scene_id: before_doorbell_announce
+      snapshot_entities:
+      - media_player.echo_dot_oficina
+      - media_player.echo_cocina
+      - media_player.echo_habitacion
+  - data:
+      volume_level: '1.0'
+    action: media_player.volume_set
+    target:
+      entity_id:
+      - media_player.echo_dot_oficina
+      - media_player.echo_cocina
+      - media_player.echo_habitacion
+  - action: media_player.play_media
+    data:
+      media:
+        media_content_id: amzn_sfx_doorbell_01
+        media_content_type: sound
+        metadata: {}
+    target:
+      entity_id:
+      - media_player.echo_dot_oficina
+      - media_player.echo_cocina
+      - media_player.echo_habitacion
+  - action: notify.alexa_media
+    data:
+      target:
+      - media_player.en_todas_partes
+      data:
+        type: announce
+      message: Hay alguien en la puerta
+  - delay:
+      seconds: 5
+  - action: scene.turn_on
+    target:
+      entity_id: scene.before_doorbell_announce
   mode: single
 - id: '1767728203826'
   alias: Lavadora Secando
@@ -127,3 +98,87 @@
       message: "\U0001F455 La lavadora esta secando"
       title: 'Lavadora:'
   mode: single
+- id: '1768150642255'
+  alias: Anochecer
+  description: Enciende las luces testigo al anochecer
+  triggers:
+  - trigger: sun
+    event: sunset
+    offset: 0
+  conditions: []
+  actions:
+  - action: scene.turn_on
+    metadata: {}
+    target:
+      entity_id: scene.anocheciendo
+    data: {}
+  mode: single
+- id: '1768504977541'
+  alias: Vamos a dormir
+  description: ''
+  triggers:
+  - trigger: time
+    at: '23:20:00'
+    weekday:
+    - mon
+    - tue
+    - wed
+    - thu
+    - sun
+  - trigger: time
+    at: 03:00:00
+    weekday:
+    - sat
+    - sun
+  conditions: []
+  actions:
+  - action: scene.turn_on
+    metadata: {}
+    target:
+      entity_id: scene.hora_de_dormir
+    data: {}
+  mode: single
+- id: '1768505207450'
+  alias: Amaneciendo
+  description: ''
+  triggers:
+  - trigger: sun
+    event: sunrise
+    offset: 0
+  conditions: []
+  actions:
+  - action: scene.turn_on
+    metadata: {}
+    target:
+      entity_id: scene.amaneciendo
+    data: {}
+  mode: single
+- id: '1768505400000'
+  alias: HA Laptop Battery Low Alert
+  description: Alert when Home Assistant laptop battery is below 30% and discharging
+  mode: single
+  triggers:
+  - trigger: numeric_state
+    entity_id: sensor.ha_laptop_battery
+    below: 30
+  conditions:
+  - condition: state
+    entity_id: sensor.ha_laptop_battery_status
+    state: Discharging
+  actions:
+  - action: telegram_bot.send_message
+    metadata: {}
+    data:
+      config_entry_id: 01KEA1ZSWWVH9FKBMG8X5WA93D
+      message: >
+        Batería del servidor en {{ states('sensor.ha_laptop_battery') }}%
+        ({{ states('sensor.ha_laptop_battery_status') }}).
+        Enchufá el cargador ⚡
+      title: 'Servidor:'
+  - action: notify.notify
+    data:
+      title: "🔋 Home Assistant"
+      message: >
+        Batería del servidor en {{ states('sensor.ha_laptop_battery') }}%
+        ({{ states('sensor.ha_laptop_battery_status') }}).
+        Enchufá el cargador ⚡

@@ -69,3 +69,6 @@ custom_components/**/.storage/
 media/
 otbr-data/
 homeassistant/config/www/
+home-assistant-matter-hub/
+homeassistant/config/.cache
+homeassistant/config/custom_components

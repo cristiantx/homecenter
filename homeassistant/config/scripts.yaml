@@ -16,7 +16,10 @@ timbre_entrada_snapshot_telegram:
   - parallel:
     - sequence:
       - delay:
+          hours: 0
+          minutes: 0
           seconds: 2
+          milliseconds: 0
       - action: downloader.download_file
         data:
           url: http://127.0.0.1:1984/api/frame.jpeg?src=cam5_main&{{as_timestamp(now())}}
@@ -41,3 +44,13 @@ timbre_entrada_snapshot_telegram:
       config_entry_id: 01KEA1ZSWWVH9FKBMG8X5WA93D
       message: Alguien está en la puerta de entrada
   mode: parallel
+test_alexa:
+  sequence:
+  - action: notify.alexa_media
+    data:
+      target:
+      - media_player.echo_cocina
+      - media_player.echo_habitacion
+      data:
+        type: announce
+      message: Hola bebechula
