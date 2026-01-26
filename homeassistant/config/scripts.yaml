@@ -54,3 +54,55 @@ test_alexa:
       data:
         type: announce
       message: Hola bebechula
+alexa_announce_with_volume:
+  alias: Alexa Announce with Volume Restore
+  description: Announce a message on specified Alexa devices with volume control
+  fields:
+    target_entities:
+      description: List of Alexa media player entities
+      example: "['media_player.echo_cocina', 'media_player.echo_habitacion']"
+      required: true
+    message:
+      description: Message to announce
+      example: "La lavadora ha terminado"
+      required: true
+    scene_id:
+      description: Unique scene ID for this announcement
+      example: "alexa_volume_restore_lavadora"
+      required: true
+    sound_id:
+      description: Optional Alexa sound effect to play before announcement
+      example: "amzn_sfx_doorbell_01"
+      required: false
+  sequence:
+  - action: scene.create
+    data:
+      scene_id: "{{ scene_id }}"
+      snapshot_entities: "{{ target_entities }}"
+  - action: media_player.volume_set
+    data:
+      volume_level: 1.0
+    target:
+      entity_id: "{{ target_entities }}"
+  - if:
+    - condition: template
+      value_template: "{{ sound_id is defined and sound_id != '' }}"
+    then:
+    - action: media_player.play_media
+      data:
+        media_content_id: "{{ sound_id }}"
+        media_content_type: sound
+        metadata: {}
+      target:
+        entity_id: "{{ target_entities }}"
+  - action: notify.alexa_media
+    data:
+      target: "{{ target_entities }}"
+      data:
+        type: announce
+      message: "{{ message }}"
+  - delay:
+      seconds: 5
+  - action: scene.turn_on
+    target:
+      entity_id: "scene.{{ scene_id }}"

@@ -41,44 +41,15 @@
   - action: script.turn_on
     target:
       entity_id: script.timbre_entrada_snapshot_telegram
-  - action: scene.create
+  - action: script.alexa_announce_with_volume
     data:
-      scene_id: before_doorbell_announce
-      snapshot_entities:
+      target_entities:
       - media_player.echo_dot_oficina
       - media_player.echo_cocina
       - media_player.echo_habitacion
-  - data:
-      volume_level: '1.0'
-    action: media_player.volume_set
-    target:
-      entity_id:
-      - media_player.echo_dot_oficina
-      - media_player.echo_cocina
-      - media_player.echo_habitacion
-  - action: media_player.play_media
-    data:
-      media:
-        media_content_id: amzn_sfx_doorbell_01
-        media_content_type: sound
-        metadata: {}
-    target:
-      entity_id:
-      - media_player.echo_dot_oficina
-      - media_player.echo_cocina
-      - media_player.echo_habitacion
-  - action: notify.alexa_media
-    data:
-      target:
-      - media_player.en_todas_partes
-      data:
-        type: announce
       message: Hay alguien en la puerta
-  - delay:
-      seconds: 5
-  - action: scene.turn_on
-    target:
-      entity_id: scene.before_doorbell_announce
+      scene_id: alexa_volume_restore_doorbell
+      sound_id: amzn_sfx_doorbell_01
   mode: single
 - id: '1767728203826'
   alias: Lavadora Secando
@@ -95,8 +66,33 @@
     metadata: {}
     data:
       config_entry_id: 01KEA1ZSWWVH9FKBMG8X5WA93D
-      message: "\U0001F455 La lavadora esta secando"
-      title: 'Lavadora:'
+      message: "\U0001F455 El lavarropas está secando"
+      title: 'Lavarropas:'
+  mode: single
+- id: '1768505500000'
+  alias: Lavadora Terminada
+  description: ''
+  triggers:
+  - trigger: state
+    entity_id:
+    - sensor.lavadora_current_status
+    to:
+    - finished
+  conditions: []
+  actions:
+  - action: telegram_bot.send_message
+    metadata: {}
+    data:
+      config_entry_id: 01KEA1ZSWWVH9FKBMG8X5WA93D
+      message: "\U0001F455 El lavarropas terminó"
+      title: 'Lavarropas:'
+  - action: script.alexa_announce_with_volume
+    data:
+      target_entities:
+      - media_player.echo_habitacion
+      - media_player.echo_cocina
+      message: El lavarropas terminó
+      scene_id: alexa_volume_restore_lavadora
   mode: single
 - id: '1768150642255'
   alias: Anochecer
@@ -170,15 +166,15 @@
     metadata: {}
     data:
       config_entry_id: 01KEA1ZSWWVH9FKBMG8X5WA93D
-      message: >
-        Batería del servidor en {{ states('sensor.ha_laptop_battery') }}%
-        ({{ states('sensor.ha_laptop_battery_status') }}).
-        Enchufá el cargador ⚡
+      message: 'Batería del servidor en {{ states(''sensor.ha_laptop_battery'') }}%
+        ({{ states(''sensor.ha_laptop_battery_status'') }}). Enchufá el cargador ⚡
+
+        '
       title: 'Servidor:'
   - action: notify.notify
     data:
-      title: "🔋 Home Assistant"
-      message: >
-        Batería del servidor en {{ states('sensor.ha_laptop_battery') }}%
-        ({{ states('sensor.ha_laptop_battery_status') }}).
-        Enchufá el cargador ⚡
+      title: "\U0001F50B Home Assistant"
+      message: 'Batería del servidor en {{ states(''sensor.ha_laptop_battery'') }}%
+        ({{ states(''sensor.ha_laptop_battery_status'') }}). Enchufá el cargador ⚡
+
+        '
